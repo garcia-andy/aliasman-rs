@@ -1,0 +1,17 @@
+[package]
+name = "aliasman"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[package.metadata.deb]
+maintainer = "Andy Garcia <agf030124@gmail.com>"
+copyright = "2024, Andy Garcia <agf030124@gmail.com>"
+extended-description = """A simple tool for manage your aliasses"""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+ ["target/release/aliasman", ".", "755"],
+]
