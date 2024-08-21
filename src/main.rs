@@ -1,19 +1,11 @@
-use aliasman::Printer;
-use clap::Parser;
+use aliasman::{alias::Alias, cli::{Cli, Commands, Program}, setup_aliasman, Printer};
+use clap::{Parser, Subcommand};
 
-/// 
-#[derive(Parser)]
-#[command(version, about, long_about = None)]
-struct Cli {
-    /// The Message
-    #[arg(short, long, default_value_t = String::from("Hello World"))]
-    message: String,
-}
 
 fn main() {
-    let args = Cli::parse();
-    let mut printer = Printer::new();
+    let cli = Cli::parse();
+    let mut prog = Program::new();
+
+    prog.resolve(&cli);
     
-    printer.writeln(&args.message).unwrap()
-        .flush().unwrap();
 }
