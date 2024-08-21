@@ -14,8 +14,6 @@ repository = "https://github.com/garcia-andy/aliasman-rs"
 [dependencies]
 anyhow = "1.0.86"
 clap = { version = "4.5.16", features = ["derive"] }
-clap_complete = "4.5.19"
-wild = "2.2.1"
 
 [package.metadata.deb]
 maintainer = "Andy Garcia <agf030124@gmail.com>"
