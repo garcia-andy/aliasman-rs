@@ -77,7 +77,7 @@ impl Program{
         ).unwrap();
     }
 
-    pub fn replace(&mut self, name: &String, cmd: &Vec<String>) {
+    pub fn replace(&mut self, name: &String, cmd: &[String]) {
         self.rm(name);
         self.add(name, cmd);
     }
