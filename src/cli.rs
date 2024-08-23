@@ -34,6 +34,12 @@ pub struct Program {
 }
 
 
+impl Default for Program {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Program{
     pub fn new() -> Self {
         let _aman = setup_aliasman().unwrap();
@@ -42,7 +48,7 @@ impl Program{
         Self { _aliasman: _aman, _prt: printer }
     }
 
-    pub fn add(&mut self, name: &String, cmd: &Vec<String>) {
+    pub fn add(&mut self, name: &String, cmd: &[String]) {
         self._aliasman.add( 
             Alias(
                 name.clone(), 

@@ -13,11 +13,17 @@ pub struct ProcessMan<'a>{
     sys: &'a System
 }
 
+impl<'a> Default for ProcessMan<'a> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<'a> ProcessMan<'a> {
     pub fn new() -> ProcessMan<'a> {
-        static _SYS_: LazyLock<System> =  LazyLock::new(|| create_new_info());
+        static _SYS_: LazyLock<System> =  LazyLock::new(create_new_info);
         ProcessMan { 
-            sys: &*_SYS_
+            sys: &_SYS_
         }
     }
 
@@ -97,6 +103,6 @@ impl<'a> ProcessMan<'a> {
 
 impl <'a>Clone for ProcessMan<'a>{
     fn clone(&self) -> Self {
-        Self { sys: &*self.sys }
+        Self { sys: self.sys }
     }
 }

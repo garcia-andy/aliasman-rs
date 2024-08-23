@@ -16,6 +16,12 @@ pub struct Printer {
     err: BufWriter<Stderr>
 }
 
+impl Default for Printer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Printer {
     pub fn new() -> Self {
         Self { 
@@ -59,8 +65,8 @@ pub fn setup_aliasman() -> Result<AliasMan> {
             }
 
             let mut bash = mod_file(bash.as_str())?;
-            bash.write(import_content.as_bytes())?;
-            bash.write_all(alias.as_str().as_bytes())?;
+            bash.write_all(import_content.as_bytes())?;
+            bash.write_all(alias.as_bytes())?;
         }
 
     }else{

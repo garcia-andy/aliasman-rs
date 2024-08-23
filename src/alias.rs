@@ -35,7 +35,7 @@ impl AliasMan{
             // getting the command (without the " or ')!
             let alias_cmd = remove_both(strs[1], "'");
 
-            aliases_objs.push( Alias(alias_name, String::from(alias_cmd)) )
+            aliases_objs.push( Alias(alias_name, alias_cmd) )
         };
 
         Self { alias_file: String::from(file), aliases: aliases_objs }

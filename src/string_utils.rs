@@ -1,5 +1,5 @@
 pub fn remove_init(content: &str, pattern: &str) -> String 
-{ replace_init(content, &pattern, "") }
+{ replace_init(content, pattern, "") }
 
 pub fn replace_init(content: &str, from: &str, to: &str) -> String {
     let mut result = String::from(content);
@@ -12,7 +12,7 @@ pub fn replace_init(content: &str, from: &str, to: &str) -> String {
 }
 
 pub fn remove_end(content: &str, pattern: &str) -> String 
-{ replace_end(content, &pattern, "") }
+{ replace_end(content, pattern, "") }
 
 pub fn replace_end(content: &str, from: &str, to: &str) -> String {
     let mut result = String::from(content);
@@ -26,7 +26,7 @@ pub fn replace_end(content: &str, from: &str, to: &str) -> String {
 }
 
 pub fn remove_both(content: &str, pattern: &str) -> String 
-{ replace_both(content, &pattern, "") }
+{ replace_both(content, pattern, "") }
 
 pub fn replace_both(content: &str, from: &str, to: &str) -> String {
     replace_end(
