@@ -2,10 +2,13 @@ pub mod alias;
 pub mod string_utils;
 pub mod file_utils;
 pub mod cli;
+pub mod shell_utils;
+pub mod proc;
 
 use alias::AliasMan;
 use file_utils::*;
 use anyhow::{Ok, Result};
+use shell_utils::{get_shell_aliases, get_shell_config_file};
 use std::{fs::read_to_string, io::{self, BufWriter, Stderr, Stdout, Write}, path::Path};
 
 pub struct Printer {
@@ -41,26 +44,22 @@ impl Printer {
 
 }
 
-pub const BASH_FILE: &str = ".bashrc";
-pub const ALIAS_FILE: &str = ".aliasman.aliases";
-
-pub fn get_bash_file() -> String 
-{ format!("{}/{BASH_FILE}", std::env::var("HOME").unwrap()) }
-
-pub fn get_alias_file() -> String 
-{ format!("{}/{ALIAS_FILE}", std::env::var("HOME").unwrap()) }
-
 pub fn setup_aliasman() -> Result<AliasMan> {
-    let bash = get_bash_file();
-    let alias = get_alias_file();
+    let bash = get_shell_config_file();
+    let alias = get_shell_aliases();
     let p = Path::new(bash.as_str());
 
     if p.exists() {
         let bash_content = read_to_string(bash.as_str())?;
 
         if !bash_content.contains(alias.as_str()) {
+            let mut import_content = "\n. ";
+            if bash.contains("fish"){
+                import_content = "\nsource ";
+            }
+
             let mut bash = mod_file(bash.as_str())?;
-            bash.write(b"\n. ")?;
+            bash.write(import_content.as_bytes())?;
             bash.write_all(alias.as_str().as_bytes())?;
         }
 
