@@ -4,16 +4,19 @@ version = "1.0.0"
 edition = "2021"
 readme = "README.md"    
 authors = ["Andy Garcia <agf030124@gmail.com>"]
-copyright = "2024, Andy Garcia <agf030124@gmail.com>"
 license-file = "LICENSE.md"
 description = """A simple tool for manage your aliasses"""
 keywords = ["utility","tool", "aliasses", "alias", "linux"]
 homepage = "https://github.com/garcia-andy/aliasman-rs"
 repository = "https://github.com/garcia-andy/aliasman-rs"
 
+[badges]
+maintenance = { status = "actively-developed" }
+
 [dependencies]
 anyhow = "1.0.86"
 clap = { version = "4.5.16", features = ["derive"] }
+sysinfo = "0.31.2"
 
 [package.metadata.deb]
 maintainer = "Andy Garcia <agf030124@gmail.com>"
@@ -22,7 +25,6 @@ license-file = "LICENSE.md"
 extended-description = """A simple tool for manage your aliasses"""
 depends = "$auto"
 section = "utility"
-keywords = ["utility","tool", "aliasses", "alias", "linux"]
 priority = "optional"
 assets = [
  ["target/release/aliasman", ".", "755"],
