@@ -87,7 +87,6 @@ impl Program{
         }
     }
 
-
     pub fn resolve(&mut self, cli: &Cli) {
         match &cli.command {
             Commands::Add { name, cmd } => {
@@ -106,6 +105,8 @@ impl Program{
                 self.list()
             },
         }
+
+        self._aliasman.flush_changes().expect("Unable to save changes!");
     }
 
 }
