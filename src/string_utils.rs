@@ -5,7 +5,7 @@ pub fn replace_init(content: &str, from: &str, to: &str) -> String {
     let mut result = String::from(content);
     
     if content.starts_with(from){ 
-        result = content.replacen(from, to, 1)
+        result = content.replacen(from, to, 1);
     }
 
     result

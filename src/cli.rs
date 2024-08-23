@@ -71,8 +71,7 @@ impl Program{
 
         self._prt.writeln(
             format!(
-                "Removed alias {}", 
-                name
+                "Removed alias {name}"
             ).as_str()
         ).unwrap();
     }
@@ -96,19 +95,19 @@ impl Program{
     pub fn resolve(&mut self, cli: &Cli) {
         match &cli.command {
             Commands::Add { name, cmd } => {
-                self.add(name, cmd)
+                self.add(name, cmd);
             }
             Commands::Replace { name, cmd } => {
-                self.replace(name, cmd)
+                self.replace(name, cmd);
             }
             Commands::Remove { name } => {
-                self.rm(name)
+                self.rm(name);
             },
             Commands::Rm { name } => {
-                self.rm(name)
+                self.rm(name);
             },
             Commands::List => {
-                self.list()
+                self.list();
             },
         }
 

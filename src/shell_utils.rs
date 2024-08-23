@@ -28,10 +28,10 @@ static SHELLS_INFO: LazyLock< HashMap<String,ShellConfig> > =
 
         for [name, conf, alias] in arr{
             m.insert(
-                name.to_string(), 
+                (*name).to_string(), 
                 ShellConfig { 
-                    alias_file: alias.to_string(), 
-                    config_file: conf.to_string()
+                    alias_file: (*alias).to_string(), 
+                    config_file: (*conf).to_string()
                 }
             );
         }

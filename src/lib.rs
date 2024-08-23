@@ -31,14 +31,14 @@ impl Printer {
     }
 
     pub fn err(&mut self, content: &str){
-        let _ = write!(self.err, "{}", content);
+        let _ = write!(self.err, "{content}");
     }
 
     pub fn writeln(&mut self, content: &str) -> Result<&mut Self> 
-    { self.write(format!("{}\n",content).as_str()) }
+    { self.write(format!("{content}\n").as_str()) }
 
     pub fn write(&mut self, content: &str) -> Result<&mut Self> {
-        write!(self.out, "{}", content)?;
+        write!(self.out, "{content}")?;
         Ok(self)
     }
 
@@ -70,7 +70,7 @@ pub fn setup_aliasman() -> Result<AliasMan> {
         }
 
     }else{
-        println!("Bash file not exist!")
+        println!("Bash file not exist!");
     }
 
     create_file( alias.as_str() )?;

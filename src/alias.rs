@@ -13,9 +13,10 @@ pub struct AliasMan{
 }
 
 impl AliasMan{
+    
     pub fn new(file: &str) -> Self {
         // read aliases file content
-        let aliases = read_to_string(file).unwrap();
+        let aliases = read_to_string(file).expect("Unavle to read the aliases config file");
         // vec of lines
         let aliases_vec: Vec<&str> = 
             aliases.split(|c| c == '\n').collect();
@@ -28,14 +29,14 @@ impl AliasMan{
                 continue;
             }
             // separete items
-            let strs: Vec<&str> = line.split("=").collect();
+            let strs: Vec<&str> = line.split('=').collect();
             // getting the alias name
             let alias_name = 
                 remove_init(strs[0], "alias ");
             // getting the command (without the " or ')!
             let alias_cmd = remove_both(strs[1], "'");
 
-            aliases_objs.push( Alias(alias_name, alias_cmd) )
+            aliases_objs.push( Alias(alias_name, alias_cmd) );
         };
 
         Self { alias_file: String::from(file), aliases: aliases_objs }

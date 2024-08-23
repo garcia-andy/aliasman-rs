@@ -20,14 +20,14 @@ impl<'a> Default for ProcessMan<'a> {
 }
 
 impl<'a> ProcessMan<'a> {
-    pub fn new() -> ProcessMan<'a> {
+    pub fn new() -> Self {
         static _SYS_: LazyLock<System> =  LazyLock::new(create_new_info);
         ProcessMan { 
             sys: &_SYS_
         }
     }
 
-    pub fn new_from(pm: &ProcessMan<'a>) -> ProcessMan<'a> {
+    pub fn new_from(pm: &Self) -> Self {
         pm.clone()
     }
 
