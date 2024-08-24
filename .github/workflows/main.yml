@@ -25,7 +25,7 @@ jobs:
       uses: actions-rs/toolchain@v1
       with:
         toolchain: ${{ env.RUST_VERSION_STABLE }}
-        profile: release
+        profile: minimal
         override: true
     - name: Building
       run: cargo build --release --all-targets
@@ -43,7 +43,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ env.RUST_VERSION_STABLE }}
-          profile: release
+          profile: minimal
           components: rustfmt, clippy
           override: true
       - name: Run clippy
