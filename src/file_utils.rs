@@ -42,5 +42,7 @@ pub fn create_file(file: &str) -> Result<()> {
 }
 
 /// Getting the size of a file from his metadata
+/// # Panics
+/// Panic if conversion on uszie from u64 fail
 pub fn get_file_size(f: &File) -> Option<usize> 
 { f.metadata().map(|m| usize::try_from(m.len()).expect("Error on u64 -> usize convertion") ).ok() }

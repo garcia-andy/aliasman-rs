@@ -1,5 +1,3 @@
-/// Library with all features for the Alias Manager
-
 /// Crate with alias features
 pub mod alias;
 /// Crate with CLI options and features
@@ -19,6 +17,7 @@ use anyhow::{Ok, Result};
 use shell_utils::{get_shell_aliases, get_shell_config_file};
 use std::{fs::read_to_string, io::{self, BufWriter, Stderr, Stdout, Write}, path::Path};
 
+/// Print Interface for more effective print
 pub struct Printer {
     out: BufWriter<Stdout>,
     err: BufWriter<Stderr>

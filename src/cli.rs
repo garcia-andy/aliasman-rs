@@ -56,8 +56,8 @@ impl Default for Program {
     }
 }
 
-fn fprint(p: &mut Printer, content: String){
-    p.writeln(content.as_str()).expect("Error writing information");
+fn fprint(p: &mut Printer, content: &str){
+    p.writeln(content).expect("Error writing information");
 }
 
 impl Program{
@@ -70,17 +70,17 @@ impl Program{
 
         fprint(
             &mut printer, 
-            format!("Detected Shell: {}", get_shell())
+            &format!("Detected Shell: {}", get_shell().as_str())
         );
 
         fprint(
             &mut printer, 
-            format!("Config File: {}", get_shell_config_file())
+            &format!("Config File: {}", get_shell_config_file().as_str())
         );
 
         fprint(
             &mut printer, 
-            format!("Alias File: {}", get_shell_aliases())
+            &format!("Alias File: {}", get_shell_aliases().as_str())
         );
 
 
