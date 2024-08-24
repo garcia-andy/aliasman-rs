@@ -4,8 +4,11 @@ use std::sync::LazyLock;
 use std::collections::HashMap;
 
 
+/// Struct representing the files configurations of an specific shell
 pub struct ShellConfig {
+    /// The file from save the aliases
     pub alias_file: String,
+    /// The file to write the configurations
     pub config_file: String
 }
 
@@ -41,6 +44,7 @@ static SHELLS_INFO: LazyLock< HashMap<String,ShellConfig> > =
     })
 ;
 
+/// Get the name of the shell from the process manager
 pub fn get_shell() -> String {
     // getting the process manager
     let pm = ProcessMan::new();
@@ -48,6 +52,9 @@ pub fn get_shell() -> String {
     pm.get_parent_name()
 }
 
+/// Getting the name of the config file
+/// # Panics
+/// Panic on getting env var
 pub fn get_shell_config_file() -> String {
     let shell_name = get_shell();
     let homedir = std::env::var("HOME").expect("We required the $HOME Path for determinate the shell config file!");
@@ -62,6 +69,9 @@ pub fn get_shell_config_file() -> String {
     cfg_file
 }
 
+/// Getting the name of the alias file
+/// # Panics
+/// Panic on getting env var
 pub fn get_shell_aliases() -> String {
     let shell_name = get_shell();
     let homedir = std::env::var("HOME").expect("We required the $HOME Path for determinate the shell config file!");

@@ -6,14 +6,21 @@ use crate::file_utils::*;
 use anyhow::anyhow;
 use anyhow::Result;
 
+/// Struct with 2 strings:
+/// 1. Alias name
+/// 2. Alias command
 pub struct Alias(pub String,pub String);
+
+/// Struct for manage all the aliases
 pub struct AliasMan{
     alias_file: String,
     aliases: Vec<Alias>
 }
 
 impl AliasMan{
-    
+    /// Create a new instance of the Alias manager using the file specified
+    /// # Panics
+    /// Panic on read_to_string
     pub fn new(file: &str) -> Self {
         // read aliases file content
         let aliases = read_to_string(file).expect("Unavle to read the aliases config file");
@@ -42,6 +49,9 @@ impl AliasMan{
         Self { alias_file: String::from(file), aliases: aliases_objs }
     }
 
+    /// Add a new Alias
+    /// # Errors
+    /// AnyHow error for a repeated alias
     pub fn add(&mut self, a: Alias) -> Result<()> {
         for alias in &self.aliases {
             if alias.0 == a.0 { 
@@ -53,6 +63,9 @@ impl AliasMan{
         Ok(())
     }
 
+    /// Remove an existent alias
+    /// # Errors
+    /// AnyHow error for a inexistent alias
     pub fn rm(&mut self, name: &str) -> Result<()> {
         let mut idx = 0;
         
@@ -66,13 +79,16 @@ impl AliasMan{
 
         if idx < self.aliases.len()
         { self.aliases.remove(idx); }
+        else{ return Err( anyhow!("Alias not exist!"));  }
         
         Ok(())
     }
 
+    /// List all registreds aliases
     pub fn list(&self) -> &Vec<Alias> 
     { &self.aliases }
 
+    /// List all aliases (only names)
     pub fn alias_names(&self) -> Vec<String> {
         let mut ret: Vec<String> = vec![];
         for e in &self.aliases
@@ -80,7 +96,10 @@ impl AliasMan{
         ret
     }
 
-    pub fn flush_changes(&mut self) -> Result<()> {
+    /// Write all changes in the specified file on construction
+    /// # Errors
+    /// Error at truncate file
+    pub fn flush_changes(&self) -> Result<()> {
         let mut file = truncate_file(self.alias_file.as_str())?;
 
         for alias in &self.aliases {
