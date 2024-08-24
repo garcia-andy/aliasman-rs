@@ -1,4 +1,4 @@
-//! Doc?
+//! The Main process
 use aliasman::cli::{Cli, Program};
 use clap::Parser;
 

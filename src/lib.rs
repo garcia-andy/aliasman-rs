@@ -1,4 +1,4 @@
-//! Doc?
+//! The main library
 /// Crate with alias features
 pub mod alias;
 /// Crate with CLI options and features
