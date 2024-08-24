@@ -29,8 +29,8 @@ pub fn mod_file(file: &str) -> Result<File> {
 pub fn truncate_file(file: &str) -> Result<File> {
     Ok(OpenOptions::new()
         .create(true)
-        .write(true)
         .truncate(true)
+        .write(true)
         .open(file)?)
 }
 

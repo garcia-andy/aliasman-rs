@@ -1,8 +1,5 @@
 use crate::{
-    alias::{Alias, AliasMan},
-    setup_aliasman,
-    shell_utils::{get_shell, get_shell_aliases, get_shell_config_file},
-    Printer,
+    alias::{Alias, AliasMan}, setup_aliasman, shell_utils::get_shell, updateable, Printer
 };
 use clap::{Parser, Subcommand};
 
@@ -45,6 +42,8 @@ pub enum Commands {
     },
     /// List all Aliases
     List,
+    /// Force update the local shells information
+    Update
 }
 
 /// Struct representing
@@ -75,16 +74,6 @@ impl Program {
         fprint(
             &mut printer,
             &format!("Detected Shell: {}", get_shell().as_str()),
-        );
-
-        fprint(
-            &mut printer,
-            &format!("Config File: {}", get_shell_config_file().as_str()),
-        );
-
-        fprint(
-            &mut printer,
-            &format!("Alias File: {}", get_shell_aliases().as_str()),
         );
 
         Self {
@@ -136,6 +125,16 @@ impl Program {
         }
     }
 
+    /// Update the local configuration from github
+    /// # Panics 
+    /// Panic if the writeln fail
+    pub fn update_config(&mut self) {
+        let cfg = updateable::update();
+        self.prt.writeln(
+            format!("New configuration loaded: \n{}",cfg).as_str()
+        ).expect("Error printing configuration loaded");
+    }
+
     /// Run the command specified for the CLI
     /// and save changes
     /// # Panics
@@ -153,6 +152,9 @@ impl Program {
             }
             Commands::List => {
                 self.list();
+            },
+            Commands::Update => {
+                self.update_config();
             }
         }
 
