@@ -33,6 +33,13 @@ pub enum Commands {
         /// A list to create the string (using '.join(" ")') of execute
         cmd: Vec<String>,
     },
+    /// Edit an already exist alias
+    Edit {
+        /// The name of the Alias to Edit
+        name: String,
+        /// A list to create the string (using '.join(" ")') of execute
+        cmd: Vec<String>,
+    },
     /// Remove an alias
     Remove {
         /// The name of the Alias to remove
@@ -147,7 +154,7 @@ impl Program {
             Commands::Add { name, cmd } => {
                 self.add(name, cmd);
             }
-            Commands::Replace { name, cmd } => {
+            Commands::Replace { name, cmd } | Commands::Edit { name, cmd } => {
                 self.replace(name, cmd);
             }
             Commands::Remove { name } | Commands::Rm { name } => {
