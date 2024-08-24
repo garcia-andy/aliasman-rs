@@ -25,10 +25,7 @@ pub struct ShellConfig {
 //     ]
 // });
 
-static SHELLS_REMOTE: LazyLock<Vec<ShellInformation>> =
-LazyLock::new(|| {
-    load_content()
-});
+static SHELLS_REMOTE: LazyLock<Vec<ShellInformation>> = LazyLock::new(|| load_content());
 
 static SHELLS_INFO: LazyLock<HashMap<String, &ShellInformation>> = LazyLock::new(|| {
     let mut m: HashMap<String, &ShellInformation> = HashMap::new();
@@ -36,10 +33,7 @@ static SHELLS_INFO: LazyLock<HashMap<String, &ShellInformation>> = LazyLock::new
     let arr = &*SHELLS_REMOTE;
 
     for info in arr {
-        m.insert(
-            (*info.name).to_string(),
-            info,
-        );
+        m.insert((*info.name).to_string(), info);
     }
 
     m
@@ -57,26 +51,24 @@ pub fn get_shell() -> String {
 /// # Panics
 /// Panic on getting env var
 pub fn home() -> String {
-    std::env::var("HOME")
-    .expect("We required the $HOME env variable")
+    std::env::var("HOME").expect("We required the $HOME env variable")
 }
 
 /// Getting the name of the config & alias file
 /// # Panics
 /// Panic on getting env var
-pub fn get_info(name: String) -> [String;2] {
+pub fn get_info(name: String) -> [String; 2] {
     let homedir = home();
-    
+
     let cfg = (*SHELLS_INFO)
         .get(name.as_str())
         .expect("Shell configuration file not found!");
 
     let cfg_file = format!("{homedir}/{}", cfg.config);
     create_file(cfg_file.as_str()).expect("Unable to create/found config file for terminal");
-    
+
     let alias_file = format!("{homedir}/{}", cfg.alias);
     create_file(alias_file.as_str()).expect("Unable to create/found config file for terminal");
-    
-    [ cfg_file, alias_file ]
-}
 
+    [cfg_file, alias_file]
+}

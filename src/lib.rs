@@ -2,8 +2,6 @@
 pub mod alias;
 /// Crate with CLI options and features
 pub mod cli;
-/// Crate with update features
-pub mod updateable;
 /// Crate with file utilities
 pub mod file_utils;
 /// Crate with process information utilities
@@ -12,6 +10,8 @@ pub mod proc;
 pub mod shell_utils;
 /// Crate with string utilities
 pub mod string_utils;
+/// Crate with update features
+pub mod updateable;
 
 use alias::AliasMan;
 use anyhow::{Ok, Result};
@@ -78,18 +78,17 @@ impl Printer {
 /// # Errors
 /// First error on `read_to_string`
 pub fn setup_aliasman() -> Result<AliasMan> {
-    let [cfg,alias] = get_info( get_shell() );
+    let [cfg, alias] = get_info(get_shell());
 
     if Path::new(cfg.as_str()).exists() {
         let bash_content = read_to_string(cfg.as_str())?;
 
         if !bash_content.contains(alias.as_str()) {
-            let import_content = 
-                if cfg.contains("fish") {
-                    "\nsource "
-                } else {
-                    "\n. "
-                };
+            let import_content = if cfg.contains("fish") {
+                "\nsource "
+            } else {
+                "\n. "
+            };
 
             let mut bash = mod_file(cfg.as_str())?;
             bash.write_all(import_content.as_bytes())?;
