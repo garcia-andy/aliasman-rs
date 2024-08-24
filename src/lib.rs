@@ -13,6 +13,8 @@ pub mod shell_utils;
 pub mod string_utils;
 /// Crate with update features
 pub mod updateable;
+/// Crate with upgrade features
+pub mod upgrade;
 
 use alias::AliasMan;
 use anyhow::{Ok, Result};
@@ -96,6 +98,5 @@ pub fn setup_aliasman() -> Result<AliasMan> {
             bash.write_all(alias.as_bytes())?;
         }
     }
-
     Ok(AliasMan::new(alias.as_str()))
 }

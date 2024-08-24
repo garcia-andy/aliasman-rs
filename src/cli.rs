@@ -1,8 +1,8 @@
 use crate::{
     alias::{Alias, AliasMan},
-    setup_aliasman,
-    shell_utils::get_shell,
-    updateable, Printer,
+    setup_aliasman, updateable,
+    upgrade::upgrade_release,
+    Printer,
 };
 use clap::{Parser, Subcommand};
 
@@ -54,6 +54,8 @@ pub enum Commands {
     List,
     /// Force update the local shells information
     Update,
+    /// Try to upgrade the binary
+    Upgrade,
 }
 
 /// Struct representing
@@ -69,22 +71,13 @@ impl Default for Program {
     }
 }
 
-fn fprint(p: &mut Printer, content: &str) {
-    p.writeln(content).expect("Error writing information");
-}
-
 impl Program {
     /// Create a new program instance
     /// # Panics
     /// On creation of the `AliasMan` maybe panic
     pub fn new() -> Self {
         let aman = setup_aliasman().expect("Error on setup");
-        let mut printer = Printer::new();
-
-        fprint(
-            &mut printer,
-            &format!("Detected Shell: {}", get_shell().as_str()),
-        );
+        let printer = Printer::new();
 
         Self {
             aliasman: aman,
@@ -145,6 +138,16 @@ impl Program {
             .expect("Error printing configuration loaded");
     }
 
+    /// Update the local config and upgrade the binary
+    /// # Panics
+    /// Panic if the writeln fail
+    pub fn upgrade_bin(&mut self) {
+        self.update_config();
+        self.prt
+            .writeln(upgrade_release().as_str())
+            .expect("Error printing configuration loaded");
+    }
+
     /// Run the command specified for the CLI
     /// and save changes
     /// # Panics
@@ -165,6 +168,9 @@ impl Program {
             }
             Commands::Update => {
                 self.update_config();
+            }
+            Commands::Upgrade => {
+                self.upgrade_bin();
             }
         }
 

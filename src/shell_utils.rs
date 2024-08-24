@@ -1,6 +1,6 @@
 use crate::create_file;
 use crate::proc::ProcessMan;
-use crate::updateable::{load_content, ShellInformation};
+use crate::updateable::{load_content, ProgramInfo, ShellInformation};
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
@@ -12,25 +12,14 @@ pub struct ShellConfig {
     pub config_file: String,
 }
 
-// const DEFAULT_ALIAS_FILE: &str = ".aliasman";
-// static SHELLS_REGISTER_CONFIGS: LazyLock<Vec<[&str; 3]>> = LazyLock::new(|| {
-//     vec![
-//         ["bash", ".bashrc", DEFAULT_ALIAS_FILE],
-//         ["zsh", ".zshrc", DEFAULT_ALIAS_FILE],
-//         [
-//             "fish",
-//             ".config/fish/conf.fish",
-//             ".config/fish/conf.d/aliases.fish",
-//         ],
-//     ]
-// });
+/// Information getting from the global configuration
+pub static SHELLS_REMOTE: LazyLock<ProgramInfo> = LazyLock::new(load_content);
 
-static SHELLS_REMOTE: LazyLock<Vec<ShellInformation>> = LazyLock::new(load_content);
-
-static SHELLS_INFO: LazyLock<HashMap<String, &ShellInformation>> = LazyLock::new(|| {
+/// Parsed shell informations
+pub static SHELLS_INFO: LazyLock<HashMap<String, &ShellInformation>> = LazyLock::new(|| {
     let mut m: HashMap<String, &ShellInformation> = HashMap::new();
 
-    let arr = &*SHELLS_REMOTE;
+    let arr = &*SHELLS_REMOTE.shells;
 
     for info in arr {
         m.insert((*info.name).to_string(), info);
