@@ -1,6 +1,10 @@
+use crate::{
+    alias::{Alias, AliasMan},
+    setup_aliasman,
+    shell_utils::{get_shell, get_shell_aliases, get_shell_config_file},
+    Printer,
+};
 use clap::{Parser, Subcommand};
-use crate::{alias::{Alias, AliasMan}, setup_aliasman, shell_utils::{get_shell, get_shell_aliases, get_shell_config_file}, Printer};
-
 
 /// Gesture of Aliases
 #[derive(Parser)]
@@ -16,38 +20,38 @@ pub struct Cli {
 #[derive(Subcommand)]
 pub enum Commands {
     /// Adds alias
-    Add { 
+    Add {
         /// The name of the Alias to create
-        name: String, 
+        name: String,
         /// A list to create the string (using '.join(" ")') of execute
-        cmd: Vec<String> 
+        cmd: Vec<String>,
     },
     /// Replace an already exist alias
-    Replace { 
+    Replace {
         /// The name of the Alias to replace
-        name: String, 
+        name: String,
         /// A list to create the string (using '.join(" ")') of execute
-        cmd: Vec<String> 
+        cmd: Vec<String>,
     },
     /// Remove an alias
-    Remove { 
+    Remove {
         /// The name of the Alias to remove
-        name: String 
+        name: String,
     },
     /// Remove an alias
-    Rm { 
+    Rm {
         /// The name of the Alias to remove
-        name: String 
+        name: String,
     },
     /// List all Aliases
-    List
+    List,
 }
 
 /// Struct representing
 /// the alias management and the command resolve
 pub struct Program {
     aliasman: AliasMan,
-    prt: Printer
+    prt: Printer,
 }
 
 impl Default for Program {
@@ -56,11 +60,11 @@ impl Default for Program {
     }
 }
 
-fn fprint(p: &mut Printer, content: &str){
+fn fprint(p: &mut Printer, content: &str) {
     p.writeln(content).expect("Error writing information");
 }
 
-impl Program{
+impl Program {
     /// Create a new program instance
     /// # Panics
     /// On creation of the `AliasMan` maybe panic
@@ -69,56 +73,48 @@ impl Program{
         let mut printer = Printer::new();
 
         fprint(
-            &mut printer, 
-            &format!("Detected Shell: {}", get_shell().as_str())
+            &mut printer,
+            &format!("Detected Shell: {}", get_shell().as_str()),
         );
 
         fprint(
-            &mut printer, 
-            &format!("Config File: {}", get_shell_config_file().as_str())
+            &mut printer,
+            &format!("Config File: {}", get_shell_config_file().as_str()),
         );
 
         fprint(
-            &mut printer, 
-            &format!("Alias File: {}", get_shell_aliases().as_str())
+            &mut printer,
+            &format!("Alias File: {}", get_shell_aliases().as_str()),
         );
 
-
-        Self { aliasman: aman, prt: printer }
+        Self {
+            aliasman: aman,
+            prt: printer,
+        }
     }
 
     /// Interface to add an alias
     /// # Panics
     /// Panic if the alias already exist!
     pub fn add(&mut self, name: &String, cmd: &[String]) {
-        self.aliasman.add( 
-            Alias(
-                name.clone(), 
-                cmd.join(" ")
-            ) 
-        ).expect("Alias already taken!");
+        self.aliasman
+            .add(Alias(name.clone(), cmd.join(" ")))
+            .expect("Alias already taken!");
 
-        self.prt.writeln(
-            format!(
-                "Adding alias {} -> '{}'", 
-                name, 
-                cmd.join(" ")
-            ).as_str()
-        ).expect("Error on write output!");
+        self.prt
+            .writeln(format!("Adding alias {} -> '{}'", name, cmd.join(" ")).as_str())
+            .expect("Error on write output!");
     }
 
     /// Interface to remove an alias
     /// # Panics
     /// Panic if the alias not exist!
     pub fn rm(&mut self, name: &String) {
-        self.aliasman.rm( name.as_str())
-            .expect("Alias not exist!");
+        self.aliasman.rm(name.as_str()).expect("Alias not exist!");
 
-        self.prt.writeln(
-            format!(
-                "Removed alias {name}"
-            ).as_str()
-        ).expect("Error on write output!");
+        self.prt
+            .writeln(format!("Removed alias {name}").as_str())
+            .expect("Error on write output!");
     }
 
     /// Interface to replace an alias
@@ -132,18 +128,15 @@ impl Program{
     /// Interface to list all alias
     /// # Panics
     /// Panic if the writeln fail
-    pub fn list(&mut self){
-        for a in self.aliasman.list(){
-            self.prt.writeln(
-                format!(
-                    "Alias {} = '{}'",
-                    a.0,a.1
-                ).as_str()
-            ).expect("Error on write output!");
+    pub fn list(&mut self) {
+        for a in self.aliasman.list() {
+            self.prt
+                .writeln(format!("Alias {} = '{}'", a.0, a.1).as_str())
+                .expect("Error on write output!");
         }
     }
 
-    /// Run the command specified for the CLI 
+    /// Run the command specified for the CLI
     /// and save changes
     /// # Panics
     /// Panic on `flush_changes`
@@ -155,17 +148,16 @@ impl Program{
             Commands::Replace { name, cmd } => {
                 self.replace(name, cmd);
             }
-            Commands::Remove { name } 
-            | Commands::Rm { name }
-            => {
+            Commands::Remove { name } | Commands::Rm { name } => {
                 self.rm(name);
-            },
+            }
             Commands::List => {
                 self.list();
-            },
+            }
         }
 
-        self.aliasman.flush_changes().expect("Unable to save changes!");
+        self.aliasman
+            .flush_changes()
+            .expect("Unable to save changes!");
     }
-
 }
