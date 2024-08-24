@@ -134,7 +134,7 @@ impl Program {
     pub fn update_config(&mut self) {
         let cfg = updateable::update();
         self.prt
-            .writeln(format!("New configuration loaded: \n{}", cfg).as_str())
+            .writeln(format!("New configuration loaded: \n{cfg}").as_str())
             .expect("Error printing configuration loaded");
     }
 

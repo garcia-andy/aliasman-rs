@@ -8,13 +8,15 @@ use crate::{shell_utils::home, truncate_file};
 /// Information recived from curl
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ShellInformation {
+    /// The name of the shell
     pub name: String,
+    /// the name or path from HOME to configuration file
     pub config: String,
+    /// the name or path from HOME to alias file
     pub alias: String,
 }
 
 const REPO: &str = "https://raw.githubusercontent.com/garcia-andy/aliasman-rs/main/shells.json";
-
 const CFG: &str = "/.aliasman.cfg";
 
 /// Load from the github repo
@@ -52,10 +54,11 @@ fn load_from_git() -> String {
 pub fn load_content() -> Vec<ShellInformation> {
     let config_file = home() + CFG;
 
-    let content = if !Path::new(config_file.as_str()).exists() {
-        update()
-    } else {
+    let content = 
+    if Path::new(config_file.as_str()).exists() {
         read_to_string(config_file).expect("Error reading config file")
+    } else {
+        update()
     };
 
     // Parse the string of data into serde_json::Value.

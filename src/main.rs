@@ -1,3 +1,4 @@
+//! Doc?
 use aliasman::cli::{Cli, Program};
 use clap::Parser;
 

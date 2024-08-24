@@ -57,11 +57,11 @@ pub fn home() -> String {
 /// Getting the name of the config & alias file
 /// # Panics
 /// Panic on getting env var
-pub fn get_info(name: String) -> [String; 2] {
+pub fn get_info(name: &str) -> [String; 2] {
     let homedir = home();
 
     let cfg = (*SHELLS_INFO)
-        .get(name.as_str())
+        .get(name)
         .expect("Shell configuration file not found!");
 
     let cfg_file = format!("{homedir}/{}", cfg.config);
