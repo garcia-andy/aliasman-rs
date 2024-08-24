@@ -7,6 +7,7 @@ authors = ["Andy Garcia <agf030124@gmail.com>"]
 license-file = "LICENSE.md"
 description = """A simple tool for manage your aliasses"""
 keywords = ["utility","tool", "aliasses", "alias", "linux"]
+categories = ["command-line-interface","command-line-utilities","config"]
 homepage = "https://github.com/garcia-andy/aliasman-rs"
 repository = "https://github.com/garcia-andy/aliasman-rs"
 
