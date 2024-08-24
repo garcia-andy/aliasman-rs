@@ -28,7 +28,7 @@ jobs:
         profile: minimal
         override: true
     - name: Building
-      run: cargo build --realease --all-targets
+      run: cargo build --release --all-targets
     - name: Checking
       run: cargo c
     - name: Testing
