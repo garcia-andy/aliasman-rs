@@ -1,7 +1,17 @@
-{
-    "shells": {
-        "bash": [".bashrc" , ".aliasman"],
-        "zsh":  [".zshrc"  , ".aliasman"],
-        "fish": [".config/fish/conf.fish", ".config/fish/conf.d/aliases.fish"]
-    }
-}
+[
+  {
+    "name": "bash",
+    "config": ".bashrc",
+    "alias": ".aliasman"
+  },
+  {
+    "name": "zsh",
+    "config": ".zshrc",
+    "alias": ".aliasman"
+  },
+  {
+    "name": "fish",
+    "config": ".config/fish/conf.fish",
+    "alias": ".config/fish/conf.d/aliases.fish"
+  }
+]
