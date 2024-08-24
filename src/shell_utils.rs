@@ -25,7 +25,7 @@ pub struct ShellConfig {
 //     ]
 // });
 
-static SHELLS_REMOTE: LazyLock<Vec<ShellInformation>> = LazyLock::new(|| load_content());
+static SHELLS_REMOTE: LazyLock<Vec<ShellInformation>> = LazyLock::new(load_content);
 
 static SHELLS_INFO: LazyLock<HashMap<String, &ShellInformation>> = LazyLock::new(|| {
     let mut m: HashMap<String, &ShellInformation> = HashMap::new();
