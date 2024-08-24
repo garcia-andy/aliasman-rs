@@ -54,8 +54,7 @@ fn load_from_git() -> String {
 pub fn load_content() -> Vec<ShellInformation> {
     let config_file = home() + CFG;
 
-    let content = 
-    if Path::new(config_file.as_str()).exists() {
+    let content = if Path::new(config_file.as_str()).exists() {
         read_to_string(config_file).expect("Error reading config file")
     } else {
         update()
