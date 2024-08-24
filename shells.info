@@ -1,3 +1,0 @@
-["bash", ".bashrc", ".aliasman"]
-["zsh", ".zshrc", ".aliasman"]
-["fish", ".config/fish/conf.fish", ".config/fish/conf.d/aliases.fish"]
