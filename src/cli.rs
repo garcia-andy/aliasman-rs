@@ -63,7 +63,7 @@ fn fprint(p: &mut Printer, content: String){
 impl Program{
     /// Create a new program instance
     /// # Panics
-    /// On creation of the AliasMan maybe panic
+    /// On creation of the `AliasMan` maybe panic
     pub fn new() -> Self {
         let aman = setup_aliasman().expect("Error on setup");
         let mut printer = Printer::new();
@@ -146,7 +146,7 @@ impl Program{
     /// Run the command specified for the CLI 
     /// and save changes
     /// # Panics
-    /// Panic on flush_changes
+    /// Panic on `flush_changes`
     pub fn resolve(&mut self, cli: &Cli) {
         match &cli.command {
             Commands::Add { name, cmd } => {

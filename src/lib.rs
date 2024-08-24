@@ -71,7 +71,7 @@ impl Printer {
 
 /// Review the configuration for the shell and setting up if is nedded
 /// # Errors
-/// First error on read_to_string
+/// First error on `read_to_string`
 pub fn setup_aliasman() -> Result<AliasMan> {
     let bash = get_shell_config_file();
     let alias = get_shell_aliases();

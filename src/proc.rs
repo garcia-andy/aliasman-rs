@@ -22,7 +22,7 @@ impl<'a> Default for ProcessMan<'a> {
 }
 
 impl<'a> ProcessMan<'a> {
-    /// Create a new Instance of the ProcessMan &
+    /// Create a new Instance of the `ProcessMan` &
     /// use the singleton object System
     pub fn new() -> Self {
         static _SYS_: LazyLock<System> =  LazyLock::new(create_new_info);

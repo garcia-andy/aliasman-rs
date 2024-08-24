@@ -20,7 +20,7 @@ pub struct AliasMan{
 impl AliasMan{
     /// Create a new instance of the Alias manager using the file specified
     /// # Panics
-    /// Panic on read_to_string
+    /// Panic on `read_to_string`
     pub fn new(file: &str) -> Self {
         // read aliases file content
         let aliases = read_to_string(file).expect("Unavle to read the aliases config file");
@@ -51,7 +51,7 @@ impl AliasMan{
 
     /// Add a new Alias
     /// # Errors
-    /// AnyHow error for a repeated alias
+    /// `AnyHow` error for a repeated alias
     pub fn add(&mut self, a: Alias) -> Result<()> {
         for alias in &self.aliases {
             if alias.0 == a.0 { 
@@ -65,7 +65,7 @@ impl AliasMan{
 
     /// Remove an existent alias
     /// # Errors
-    /// AnyHow error for a inexistent alias
+    /// `AnyHow` error for a inexistent alias
     pub fn rm(&mut self, name: &str) -> Result<()> {
         let mut idx = 0;
         
