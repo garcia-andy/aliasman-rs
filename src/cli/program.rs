@@ -179,7 +179,7 @@ impl Program {
                 };
 
                 self._process(&command);
-            }else{
+            } else {
                 break;
             }
         }
