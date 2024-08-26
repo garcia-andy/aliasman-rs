@@ -1,4 +1,4 @@
-use crate::shell_utils::SHELLS_REMOTE;
+use crate::utils::shell_utils::SHELLS_REMOTE;
 
 /// Enabled to auto upgrade teh final binary
 /// # Panics

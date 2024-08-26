@@ -1,5 +1,5 @@
 //! The Main process
-use aliasman::cli::{Cli, Program};
+use aliasman::cli::{commands::Cli, program::Program};
 use clap::Parser;
 
 fn main() {

@@ -1,6 +1,8 @@
-use crate::create_file;
-use crate::proc::ProcessMan;
-use crate::updateable::{load_content, ProgramInfo, ShellInformation};
+use crate::{
+    create_file,
+    modules::updateable::{load_content, ProgramInfo, ShellInformation},
+    utils::proc::ProcessMan,
+};
 use std::collections::HashMap;
 use std::sync::LazyLock;
 

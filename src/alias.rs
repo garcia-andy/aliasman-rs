@@ -1,5 +1,4 @@
-use crate::file_utils::*;
-use crate::string_utils::*;
+use crate::utils::{file_utils::*, string_utils::*};
 use std::fs::read_to_string;
 use std::io::Write;
 

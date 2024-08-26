@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use spinners::{Spinner, Spinners};
 use std::{fs::read_to_string, io::Write, path::Path};
 
-use crate::{shell_utils::home, truncate_file};
+use crate::{truncate_file, utils::shell_utils::home};
 
 /// Information recived from curl of shells
 #[derive(Debug, Serialize, Deserialize)]
@@ -29,7 +29,6 @@ const REPO: &str = "https://raw.githubusercontent.com/garcia-andy/aliasman-rs/ma
 const CFG: &str = "/.aliasman.json";
 
 /// Load from the github repo
-///
 fn load_from_git() -> String {
     let mut sp = Spinner::new(
         Spinners::Dots9,
