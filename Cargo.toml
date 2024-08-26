@@ -1,6 +1,6 @@
 [package]
 name = "aliasman"
-version = "1.2.5"
+version = "1.2.0"
 edition = "2021"
 readme = "README.md"    
 authors = ["Andy Garcia <agf030124@gmail.com>"]
@@ -20,11 +20,19 @@ anyhow = "1.0.86"
 clap = { version = "4.5.16", features = ["derive"] }
 curl = "0.4.46"
 dialoguer = "=0.11.0"
+rgb = "0.8.48"
 self_update = "=0.41.0"
 serde = { version = "1.0.209", features = ["derive"] }
 serde_json = "1.0.127"
 spinners = "4.1.1"
+strum = { version = "0.26.3", features = ["derive"] }
 sysinfo = "0.31.2"
+
+[build-dependencies]
+dotenv-build = "0.1.1"
+
+[dev-dependencies]
+inline_tweak = { version = "1.1.1", features = ["derive"] }
 
 [package.metadata.deb]
 maintainer = "Andy Garcia <agf030124@gmail.com>"
