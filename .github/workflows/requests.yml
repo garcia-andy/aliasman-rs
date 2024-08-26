@@ -1,6 +1,6 @@
-name: CI
+name: PullRequests
 on:
-  push:
+  pull_request:
     branches:
       - main
 env:
@@ -18,16 +18,11 @@ jobs:
       with:
         toolchain: ${{ env.RUST_VERSION_STABLE }}
         profile: minimal
-        components: rustfmt, clippy
         override: true
     - name: Checking
       run: cargo c
     - name: Testing
       run: cargo t
-    - name: Formatting
-      run: cargo fmt
-    - name: Clippy
-      run: cargo clippy --fix --all-targets -- -D warnings $(cat lint | cut -f1 -d"#" | tr '\n' ' ')
   lint-rust:
     runs-on: ubuntu-latest
     needs: testing
@@ -45,20 +40,3 @@ jobs:
         run: cargo clippy --all-targets -- -D warnings $(cat lint | cut -f1 -d"#" | tr '\n' ' ')
       - name: Run rustfmt
         run: cargo fmt -- --check
-  publish:
-    runs-on: ubuntu-latest
-    needs: lint-rust
-    environment: Publish
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ env.RUST_VERSION_STABLE }}
-          profile: minimal
-          override: true
-      - name: Building
-        run: cargo build --release --all-targets
-      - name: Publishing
-        run: cargo publish -vv --all-features
